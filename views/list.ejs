@@ -1,22 +1,25 @@
 <%- include("header")-%>
 
 <div class="box" id="heading">
-  <h1>To Do List</h1>
-  <h1> <%=kindOfDay%> List </h1>
+
+  <h1> <%=listTitle%> List </h1>
 </div>
 
 <div class="box">
 
-  <% for(let i = 0; i<todos.length;i++){ %>
-  <div class="item">
-    <input type="checkbox">
-    <p> <%-todos[i]-%> </p>
-  </div>
-  <%}%>
+<% todos.forEach(function(item){ %>
+  <form action="/delete" method="post">
+    <div class="item">
+      <input type="checkbox" name="checkbox" value="<%=item.id%>" onChange="this.form.submit()">
+      <p> <%-item.name-%> </p>
+    </div>
+    <input type="hidden" name="listName" value="<%=listTitle%>"></input>
+  </form>
+<% }) %>
 
-<form action="/" method="post">
+<form class="item" action="/" method="post">
   <input type="text" name="newItem" placeholder="todo" autocomplete="off">
-  <button type="submit" name="button">+</button>
+  <button type="submit" name="list" value="<%=listTitle%>">+</button>
 </form>
 </div>
 
