@@ -12,11 +12,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+mongoose.connect("mongodb+srv://admin-thanhthuyvu:Test123@cluster0-oydmn.mongodb.net/todolistDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
 
 const itemsSchema = {
   name: String
@@ -87,10 +86,14 @@ app.post("/delete", function(req, res) {
     List.findOneAndUpdate({
       name: listName
     }, {
-      $pull:{items: {_id: checkedItemId}}
+      $pull: {
+        items: {
+          _id: checkedItemId
+        }
+      }
     }, function(err, foundList) {
-      if(!err){
-        res.redirect("/"+listName);
+      if (!err) {
+        res.redirect("/" + listName);
       }
     });
   }
